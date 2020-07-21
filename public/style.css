@@ -1,0 +1,39 @@
+body {
+  background-color:#8585e0;
+}
+.container {
+  width: 50%;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid rgb(36, 109, 8);
+  border-radius: 5px;
+}
+#list {
+  list-style-type: none;
+  display: block;
+  width: 60%;
+  margin:auto;
+  margin-top: 30px;
+  padding: 8px;
+}
+#hold {
+  display:inline-block;
+  position: relative;
+  right:-180px;
+}
+
+#list li {
+  display: block;
+  background-color: rgb(191, 230, 176);
+  text-align:center;
+  border-left:10px solid rgb(51, 43, 43);
+  margin:10px;
+  padding:6px;
+}
+
+#list li:hover {
+  
+  background-color: rgb(70, 187, 23);
+  color: white;
+  
+}
