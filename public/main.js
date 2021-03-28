@@ -1,4 +1,3 @@
-//const { raw } = require("express")
 
 const ulEle = document.getElementById('list')
 const inpEle = document.getElementById('inpfield')
@@ -42,7 +41,6 @@ document.addEventListener('click', (event) => {
     xhr.open("POST", "data", true)
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(`da=${inpEle.value}`)
-    //ulEle.insertAdjacentHTML('beforeend', rawhtml(cleanstuff(inpEle.value)))
     inpEle.value = ''
   }
   if (event.target.id === 'delete') {
@@ -50,6 +48,5 @@ document.addEventListener('click', (event) => {
   }
   if (event.target.id === 'edit') {
     promfun(event)
-    // event.target.parentElement.parentElement.innerHTML = promfun()
   }
 })
