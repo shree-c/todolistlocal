@@ -1,10 +1,11 @@
+//const { raw } = require("express")
+
 const ulEle = document.getElementById('list')
-// const node = document.createElement('LI')
 const inpEle = document.getElementById('inpfield')
-function rawhtml (value) {
+function rawhtml(value) {
   return `<li>${value} <div id='hold'><button id='edit'>edit</button> <button id='delete'>delete</button></div></li>`
 }
-function rawinsidehtml (value) {
+function rawinsidehtml(value) {
   return `${value} <div id='hold'><button id='edit'>edit</button> <button id='delete'>delete</button></div>`
 }
 document.addEventListener('keydown', (event) => {
@@ -12,27 +13,43 @@ document.addEventListener('keydown', (event) => {
     document.getElementById('but').click()
   }
 })
-function promfun () {
+function promfun(event) {
   while (true) {
     const editedTex = prompt('Please enter your name', 'Harry Potter')
     if (editedTex) {
-      return rawinsidehtml(editedTex)
+    let xhre = new XMLHttpRequest()
+    xhre.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        event.target.parentElement.parentElement.innerHTML =  rawinsidehtml(this.responseText)
+      }
+    }
+    xhre.open("POST", "data", true)
+    xhre.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhre.send(`da=${editedTex}`)
+    return
     }
   }
 
 }
-
 document.addEventListener('click', (event) => {
-  if (event.target === document.getElementById('but')) {
-    if (inpEle.value) {
-      ulEle.insertAdjacentHTML('beforeend', rawhtml(inpEle.value))
-      inpEle.value = ''
+  if (event.target.id === 'but') {
+    let xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        ulEle.insertAdjacentHTML('beforeend', rawhtml(this.responseText))
+      }
     }
+    xhr.open("POST", "data", true)
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(`da=${inpEle.value}`)
+    //ulEle.insertAdjacentHTML('beforeend', rawhtml(cleanstuff(inpEle.value)))
+    inpEle.value = ''
   }
-  if (event.target === document.getElementById('delete')) {
-    document.getElementById('delete').parentElement.parentElement.remove()
+  if (event.target.id === 'delete') {
+    event.target.parentElement.parentElement.remove()
   }
-  if (event.target === document.getElementById('edit')) {
-    document.getElementById('edit').parentElement.parentElement.innerHTML = promfun()
+  if (event.target.id === 'edit') {
+    promfun(event)
+    // event.target.parentElement.parentElement.innerHTML = promfun()
   }
 })
